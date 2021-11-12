@@ -1,0 +1,5 @@
+Status: working 
+
+Title: Golang Concurrency：sync.errgroup
+URL: https://www.cyningsun.com/12-30-2020/golang-errgroup.html
+

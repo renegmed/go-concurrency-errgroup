@@ -1,0 +1,9 @@
+Status: working 
+
+Title: Example - Pipeline
+URL: https://pkg.go.dev/golang.org/x/sync@v0.0.0-20210220032951-036812b2e83c/errgroup#example-Group-Pipeline
+
+Pipeline demonstrates the use of a Group to implement a multi-stage pipeline: a version of the MD5All 
+function with bounded parallelism from https://blog.golang.org/pipelines. 
+
+Comparing regular and errGroup

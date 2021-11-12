@@ -1,0 +1,6 @@
+Status: working 
+
+Title: Example for using go's sync.errgroup together with signal detection signal.Notify 
+       to stop all running goroutines 
+
+URL: https://gist.github.com/pteich/c0bb58b0b7c8af7cc6a689dd0d3d26ef

@@ -1,0 +1,7 @@
+Status: working 
+
+Title: Go pattern for worker queue - a quick case study for go concurrency
+URL: https://yizhang82.dev/go-pattern-for-worker-queue
+
+Modified to use errgroup 
+

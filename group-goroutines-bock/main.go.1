@@ -1,0 +1,33 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+
+	"golang.org/x/sync/errgroup"
+)
+
+func Job(jobID int) error {
+	if rand.Intn(12) == jobID {
+		return fmt.Errorf("job %v failed", jobID)
+	}
+
+	// fmt.Printf("Job %v done.\n", jobID)
+	return nil
+}
+
+func main() {
+	var eg errgroup.Group
+
+	for i := 0; i < 10; i++ {
+		jobID := i
+		eg.Go(func() error {
+			return Job(jobID)
+		})
+	}
+
+	if err := eg.Wait(); err != nil {
+		fmt.Println("Encountered error:", err)
+	}
+	fmt.Println("Successfully finished.")
+}

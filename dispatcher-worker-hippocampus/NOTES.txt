@@ -1,0 +1,11 @@
+Status: working
+
+Title: Ready Steady GO: Dispatcher-Worker with errgroup
+URL: https://hippocampus-garden.com/go_dispatcher/
+
+
+Program requirement:
+
+1. processes multiple jobs concurrently
+2. can limit the number of goroutines
+3. immediately cancels the other jobs when an error occurs in any goroutine

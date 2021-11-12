@@ -1,0 +1,4 @@
+Status: working 
+
+Title: Complex Pipelines in Go (Part 4): Sane Coordination and Cancellation
+URL: https://mariocarrion.com/2020/08/19/go-implementing-complex-pipelines-part-4.html

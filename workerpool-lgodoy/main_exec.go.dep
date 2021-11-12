@@ -1,0 +1,122 @@
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"math/rand"
+	"strconv"
+	"time"
+	"workerpool-pattern/workerpool"
+)
+
+var ErrDefault = errors.New("wrong type of argument")
+
+func main() {
+
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second) //time.Nanosecond*10)
+	defer cancel()
+
+	jobs := generateJobs(10)
+
+	wp := workerpool.NewWorkerPool(2)
+
+	go wp.GenerateFrom(jobs)
+	go wp.Run(ctx)
+
+	for {
+		select {
+		case r, ok := <-wp.Results():
+			if !ok {
+				continue
+			}
+
+			// i, err := strconv.ParseInt(string(r.Descriptor.ID), 10, 64)
+			// if err != nil {
+			// 	fmt.Printf("unexpected error: %v\n", err)
+			// 	continue
+			// }
+
+			switch r.Value.(type) {
+			case int:
+				fmt.Println(r.Value.(int))
+				// val := r.Value.(int)
+				// if val != int(i)*2 {
+				// 	fmt.Printf("wrong value %v; expected %v\n", val, int(i)*2)
+				// }
+			case string:
+				//val := r.Value.(string)
+				fmt.Println(r.Value.(string))
+
+			case float32:
+				fmt.Println(r.Value.(float32))
+
+			default:
+				fmt.Println("Returned value undetermined")
+			}
+
+		case <-wp.Done:
+			fmt.Println("... done")
+			return
+		default:
+		}
+	}
+}
+
+func execFn(i int) func(ctx context.Context, args interface{}) (interface{}, error) {
+	switch i % 3 {
+	case 0:
+		return multiplyByTwo
+	case 1:
+		return divideByThree
+	default:
+		return convertToString
+	}
+}
+
+func generateJobs(numOfJobs int) []*workerpool.Job {
+
+	rand.Seed(time.Now().Unix())
+
+	jobs := make([]*workerpool.Job, numOfJobs)
+	for i := 0; i < numOfJobs; i++ {
+		j := rand.Intn(500) + 25
+
+		jobs[i] = &workerpool.Job{
+			Descriptor: workerpool.JobDescriptor{
+				ID:       workerpool.JobID(fmt.Sprintf("%v", i)),
+				JType:    "anyType",
+				Metadata: nil,
+			},
+			ExecFn: execFn(j),
+			Args:   j,
+		}
+	}
+	return jobs
+}
+
+func multiplyByTwo(ctx context.Context, args interface{}) (interface{}, error) {
+	argVal, ok := args.(int)
+	if !ok {
+		return nil, ErrDefault //fmt.Errorf("Error: Invalid number.")
+	}
+
+	return argVal * 2, nil
+}
+
+func divideByThree(ctx context.Context, args interface{}) (interface{}, error) {
+	argVal, ok := args.(int)
+	if !ok {
+		return nil, ErrDefault
+	}
+	return float32(argVal) / float32(3), nil
+}
+
+func convertToString(ctx context.Context, args interface{}) (interface{}, error) {
+	argVal, ok := args.(int)
+	if !ok {
+		return nil, ErrDefault // fmt.Errorf("Error: Invalid number.")
+	}
+
+	return strconv.Itoa(argVal) + " - by golang app", nil
+}

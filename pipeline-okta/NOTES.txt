@@ -1,0 +1,4 @@
+Status: wip 
+
+Title: Go concurrency pattern: Pipeline
+URL: https://syafdia.medium.com/go-concurrency-pattern-pipeline-635dfae01af1

@@ -1,0 +1,11 @@
+Status: wip
+
+
+Title: Example - Pipeline 
+URL: https://pkg.go.dev/golang.org/x/sync@v0.0.0-20210220032951-036812b2e83c/errgroup#example-Group-Parallel
+
+Parallel illustrates the use of a Group for synchronizing a simple parallel task: the "Google Search 2.0" 
+function from https://talks.golang.org/2012/concurrency.slide#46, augmented with a Context and 
+error-handling. 
+
+Comparing regular and errGroup 

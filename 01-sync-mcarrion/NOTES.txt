@@ -1,0 +1,5 @@
+Status: working 
+
+Title: Learning Golang: Concurrency Patterns using errgroup package
+URL: https://www.youtube.com/watch?v=KGOgEr7tFKE
+

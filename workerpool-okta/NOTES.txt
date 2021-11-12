@@ -1,0 +1,13 @@
+Status: working 
+
+Title: Go Concurrency Pattern: Worker Pool
+URL: https://medium.com/code-chasm/go-concurrency-pattern-worker-pool-a437117025b1
+
+You don’t have unlimited resource on your machine, the minimal size of a goroutine 
+object is 2 KB, when you spawn too many goroutine, your machine will quickly run 
+out of memory and the CPU will keep processing the task until it reach the limit. 
+
+By using limited pool of workers and keep the task on the queue, we can reduce the 
+burst of CPU and memory since the task will wait on the queue until the the worker 
+pull the task.
+
